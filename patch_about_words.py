@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
-"""Patch index_v7.html: About section — large all-caps, scroll word-batch reveal."""
+"""Patch resume/index.html: About section — large all-caps, scroll word-batch reveal."""
 import html
 import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
-FILE = ROOT / "index_v7.html"
+FILE = ROOT / "resume" / "index.html"
 
 PARAS = [
     "I'm Vishnulal. A designer who starts with how something looks and works backwards from there. Aesthetics first, everything else gets figured out around that.",

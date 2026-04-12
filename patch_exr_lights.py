@@ -2,7 +2,7 @@
 from pathlib import Path
 
 ROOT = Path(r"c:\Users\crvis\OneDrive\Pictures\Desktop\_Resume Interactive")
-INDEX = ROOT / "index_v7.html"
+INDEX = ROOT / "resume" / "index.html"
 
 OLD_LIGHTS = """// ─── LIGHTS ──────────────────────────────────────────────────────────────────
 /* Full lighting rig — all lights on, bright readable sphere */
