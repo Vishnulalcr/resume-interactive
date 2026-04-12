@@ -1,0 +1,69 @@
+---
+alwaysApply: true
+---
+# StoryTool — Figma ↔ Code sync
+
+## Quick commands
+
+| What | Command |
+|---|---|
+| Pull Figma Variables → `design-tokens.css` | `npm run figma:pull` |
+| Push `design-tokens.css` → Figma Variables | `npm run figma:push` |
+| Regenerate `design-tokens.json` from CSS | `npm run sync-tokens` |
+
+## Figma → CSS pull (`figma:pull`)
+
+- Script: `scripts/figma-to-tokens.mjs`
+- Requires `FIGMA_TOKEN` in `.env.local` (see `.env.local.example`)
+- Reads Figma Variables via REST API (`GET /v1/files/:fileKey/variables/local`)
+- Maps variable names back to CSS custom properties using `CSS_VAR_MAP` in the script
+- Rewrites the `:root {}` block in `design-tokens.css` in-place (preserves comments)
+- Automatically re-runs `sync-tokens` to keep `design-tokens.json` in sync
+- **After pulling:** reload the browser; no build step needed
+
+## CSS → Figma push (`figma:push`)
+
+- Script: `scripts/build-figma-variables-snippet.mjs`
+- Generates `scripts/figma-variables-use-figma.generated.js`
+- That file must be executed via Figma MCP (`use_figma` tool) — read `figma-use` skill first
+- Creates / updates collections: **StoryTool/Color**, **Layout**, **Motion**, **Typography**
+
+## Code Connect mappings
+
+- File: `figma/code-connect.json`
+- Maps every Figma component to its HTML selector, source file, design tokens, and child anatomy
+- **Components covered:**
+  - `SpineBar` → `#spine` in `index.html`
+  - `LeftPanel` → `#left-panel` in `index.html`
+  - `NodeLibItem` → `renderLib()` in `script.js`
+  - `NodeCard` → `createNode()` in `script.js` (5 variants: world, character, director, scene, narrative)
+  - `RightPanel` → `#right-panel` in `index.html` (CONFIG / SCRIPT / ROOM tabs)
+  - `PromptDock` → `#prompt-dock` in `index.html` (collapsed + expanded states)
+  - `ProgressBar` → `#progress-bar` in `index.html`
+  - `FTUXIntroOverlay` → `#ftux-intro` in `index.html`
+  - `FTUXTipBox` → `#ftux-tip-box` in `index.html`
+  - `CanvasGrid` → `draw()` in `script.js`
+  - `Icon` → `ICONS` object in `script.js`
+  - `SpotifyBar` → `#dock-spotify-bar` in `index.html`
+
+## Icon system
+
+- All icons are inline SVGs from the `ICONS` object in `script.js` (Material Design Icons)
+- Always `fill="currentColor"` — color is inherited from parent via `currentColor`
+- Wrapper: `<span class="ic">` — `display:inline-flex; align-items:center; justify-content:center; flex-shrink:0`
+- **No background frame** — icons are bare SVGs, never wrapped in a colored circle/square
+- Size contexts: spine-btn=14px, node-head-icon=14px, lib-icon=14px, dock buttons=11–12px
+- Figma: use instances of `icon/{name}` components from the **Icons** page
+
+## Token rules
+
+- **Never** hardcode a hex or rgba value in new CSS — add a token to `design-tokens.css` first
+- Category colors: `--c-world` `--c-char` `--c-director` `--c-scene` `--c-narrative` `--c-default`
+- Motion: all durations and easings are tokens (`--dur-*`, `--ease-*`)
+- Layout: `--grid-size`, `--panel-w`, `--spine-h`, `--progress-bar-h`, `--dock-gap`, `--dock-shell-h-inset`
+
+## Figma file
+
+- **File key:** `Sfv1LZbfeg0QEDZhhjQDKu`
+- **URL:** `https://www.figma.com/design/Sfv1LZbfeg0QEDZhhjQDKu/StoryTool-Design-System`
+- Pages: `Foundations`, `Icons`, `Components`, `App Screens`, `iPad Layouts`

@@ -1,0 +1,783 @@
+/* ════════════════════════════════════════════════════
+   freecam2 — bundled font
+   ════════════════════════════════════════════════════ */
+@font-face {
+  font-family: 'freecam2';
+  src: local('freecam v2'),
+       local('freecam2'),
+       url('fonts/freecam2.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ════════════════════════════════════════════════════
+   DESIGN TOKENS
+   ════════════════════════════════════════════════════ */
+:root {
+  /* ── Dark zone (landing) ── */
+  --bg-dark:        #0C0C0D;
+  --ink-dark:       #F7F6F3;
+  --ink-dark-dim:   rgba(247,246,243,0.55);
+
+  /* ── Light zone (resume + body) ── */
+  --bg:             #F8F7F4;
+  --bg-surface:     #FFFFFF;
+  --ink-full:       #0F0F0F;
+  --ink-body:       rgba(15,15,15,0.72);
+  --ink-bio:        rgba(15,15,15,0.80);
+  --ink-org:        rgba(15,15,15,0.50);
+  --ink-date:       rgba(15,15,15,0.35);
+  --ink-rule:       rgba(15,15,15,0.10);
+  --ink-border:     rgba(15,15,15,0.12);
+  --surface:        rgba(255,253,250,0.84);
+  --surface-strong: #FFFDFC;
+  --surface-border: rgba(15,15,15,0.08);
+  --surface-shadow: 0 22px 70px rgba(18,18,19,0.09);
+  --radius-card:    28px;
+  --t-fast:         220ms cubic-bezier(0.22, 1, 0.36, 1);
+  --t-slow:         420ms cubic-bezier(0.22, 1, 0.36, 1);
+  --accent-cyan:    #0BB4FF;
+  --accent-violet:  #7B61FF;
+  --accent-pink:    #FF4FB7;
+  --accent-amber:   #FF9A1F;
+  --accent-lime:    #7ED957;
+
+  /* ── Fonts ── */
+  --f-display: 'Fraunces', 'Georgia', serif;
+  --f-mono:    'freecam2', 'Space Mono', 'Courier New', monospace;
+
+  /* ── Layout ── */
+  --content-max: 1280px;
+  --sidebar-w:   364px;
+  --col-gap:     52px;
+  --pad-h:       44px;
+  --pad-v:       56px;
+  --pad-bottom:  80px;
+}
+
+/* ════════════════════════════════════════════════════
+   RESET
+   ════════════════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+img  { display: block; max-width: 100%; }
+a    { color: inherit; text-decoration: none; }
+ul   { list-style: disc; }
+hr   { border: none; }
+
+/* ════════════════════════════════════════════════════
+   BASE — window scrolls, no overflow hidden
+   ════════════════════════════════════════════════════ */
+html {
+  overflow-x: hidden;
+  scroll-behavior: auto; /* GSAP handles all scroll */
+}
+html.is-loading { overflow: hidden; } /* locked during preloader */
+
+body {
+  font-family: var(--f-mono);
+  color: var(--ink-full);
+  background: var(--bg);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/*
+ * Keep scrolling functional, but remove scrollbar chrome globally.
+ * This preserves wheel/trackpad/touch scrolling while hiding the UI.
+ */
+html,
+body,
+* {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+*::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
+}
+
+/* ════════════════════════════════════════════════════
+   CANVAS — fixed behind everything
+   ════════════════════════════════════════════════════ */
+#grid-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ════════════════════════════════════════════════════
+   PRELOADER
+   ════════════════════════════════════════════════════ */
+#preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: var(--bg-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.preloader-inner {
+  display: flex;
+  gap: 0.05em;
+  font-family: var(--f-mono);
+  font-size: clamp(28px, 5vw, 56px);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-dark);
+}
+
+/*
+ * Keep animated layers hidden until GSAP has applied their initial
+ * transforms/opacities. This prevents a one-frame flash of the resume
+ * section between the preloader fade-out and the motion system booting.
+ */
+html:not(.is-ready) .lp-card,
+html:not(.is-ready) #resume {
+  visibility: hidden;
+  opacity: 0;
+}
+
+/*
+ * Belt-and-suspenders: sidebar-inner and main-content start invisible
+ * so there is no flash even if JS is slow to run.
+ * GSAP will set these explicitly in setAllInitialStates() before is-ready
+ * is added, so this only matters in the tiny window before JS executes.
+ */
+html:not(.is-ready) .sidebar-inner,
+html:not(.is-ready) .main-content {
+  opacity: 0;
+}
+
+/* ════════════════════════════════════════════════════
+   ZONE 1 — LANDING
+   ════════════════════════════════════════════════════ */
+#landing {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background: var(--bg-dark);
+  overflow: hidden;
+  z-index: 1;
+}
+
+#landing::before {
+  content: "";
+  position: absolute;
+  inset: -20%;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 50% 30%, rgba(255, 248, 238, 0.12), transparent 28%),
+    radial-gradient(circle at 78% 68%, rgba(255, 248, 238, 0.07), transparent 26%),
+    radial-gradient(circle at 18% 72%, rgba(255, 248, 238, 0.05), transparent 22%);
+  filter: blur(12px);
+}
+
+/* ────────────────────────────────────────────────────
+   TILTED STACKING CARDS
+   Centered in the viewport. GSAP owns all transforms
+   (xPercent, yPercent, rotation, scale, y).
+   ──────────────────────────────────────────────────── */
+.lp-card {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  /* GSAP sets xPercent:-50, yPercent:-50 to truly center */
+  width: clamp(340px, 54vw, 650px);
+  background: linear-gradient(180deg, #FFFDF9 0%, #F5F0E7 100%);
+  border: 1px solid rgba(15, 15, 15, 0.08);
+  border-radius: var(--radius-card);
+  pointer-events: none;
+  will-change: transform;
+  box-shadow:
+    0 28px 90px rgba(0, 0, 0, 0.18),
+    0 10px 30px rgba(0, 0, 0, 0.08);
+  /* Clip overflow from .lp-card-bg-num */
+  overflow: hidden;
+  backface-visibility: hidden;
+}
+
+.lp-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.76), rgba(255, 255, 255, 0) 45%);
+}
+
+/* Individual z-indices — card-04 on top */
+#card-01 { z-index: 11; }
+#card-02 { z-index: 12; }
+#card-03 { z-index: 13; }
+#card-04 { z-index: 14; }
+
+/* ── Ghost number — large decorative background digit */
+.lp-card-bg-num {
+  position: absolute;
+  right: -0.05em;
+  bottom: -0.15em;
+  font-family: var(--f-display);
+  font-size: clamp(160px, 22vw, 280px);
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.05em;
+  color: rgba(15, 15, 15, 0.055);
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ── Card content block ─────────────────────────── */
+.lp-card-inner {
+  position: relative; /* above .lp-card-bg-num */
+  z-index: 1;
+  padding: clamp(36px, 5vw, 60px) clamp(36px, 5vw, 60px) clamp(44px, 6vw, 72px);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  pointer-events: auto;
+}
+
+/* Card number */
+.lp-card-num {
+  font-family: var(--f-mono);
+  font-size: 8.5px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(15, 15, 15, 0.28);
+  display: block;
+  margin-bottom: 24px;
+}
+
+/* Big editorial title — the hero element */
+.lp-card-title {
+  font-family: var(--f-display);
+  font-size: clamp(48px, 6vw, 92px);
+  font-weight: 300;
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+  color: #0F0F0F;
+  margin-bottom: 24px;
+}
+
+/* Thin rule between title and body */
+.lp-card-rule {
+  width: 36px;
+  height: 1px;
+  background: rgba(15, 15, 15, 0.18);
+  margin-bottom: 22px;
+  flex-shrink: 0;
+}
+
+/* Description */
+.lp-card-body {
+  font-family: var(--f-mono);
+  font-size: 9px;
+  line-height: 1.95;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: rgba(15, 15, 15, 0.52);
+  margin-bottom: 14px;
+}
+
+/* Tools */
+.lp-card-tools {
+  font-family: var(--f-mono);
+  font-size: 7.75px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(15, 15, 15, 0.28);
+}
+
+/* ════════════════════════════════════════════════════
+   ZONE 2 — RESUME
+   ════════════════════════════════════════════════════ */
+#resume {
+  position: relative;
+  z-index: 2;
+  background: var(--bg);
+  /*
+   * Do NOT use overflow-x: clip or overflow-x: hidden here.
+   * Any overflow value other than 'visible' on an ancestor breaks
+   * position:sticky on .sidebar. Clipping of the sidebar slide-in
+   * is handled by html { overflow-x: hidden } on the root.
+   */
+}
+
+/* ── CV wrapper ─────────────────────────────────── */
+.cv {
+  width: 100%;
+  max-width: var(--content-max);
+  margin: 0 auto;
+  display: flex;
+  gap: var(--col-gap);
+  min-height: 100dvh;
+  /*
+   * align-items: flex-start is REQUIRED for position:sticky to work inside
+   * a flex container — without it the child stretches to full parent height.
+   */
+  align-items: flex-start;
+}
+
+/* ── Sidebar — sticky (never scrolls) ──────────── */
+.sidebar {
+  width: var(--sidebar-w);
+  min-width: var(--sidebar-w);
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  align-self: flex-start;   /* must pair with parent align-items: flex-start */
+  height: 100dvh;           /* fixed viewport height — sidebar fills but never grows */
+  overflow: visible;
+  background: transparent;
+  scrollbar-width: none;
+}
+.sidebar::-webkit-scrollbar { display: none; }
+
+.sidebar-inner {
+  width: 100%;
+  height: 100dvh;
+  padding: var(--pad-v) 12px var(--pad-bottom) var(--pad-h);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 26px;
+  will-change: transform, opacity;
+}
+
+/* ── Profile photo — Neo Pop ───────────────────── */
+.profile-photo-wrap {
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 1px solid rgba(15, 15, 15, 0.14);
+  box-shadow: 0 12px 28px rgba(15, 15, 15, 0.10);
+  flex-shrink: 0;
+}
+
+.profile-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
+
+.intro {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-width: 29ch;
+}
+
+/* ── L0  Name ───────────────────────────────────── */
+.name {
+  font-family: var(--f-display);
+  font-weight: 400;
+  font-size: clamp(44px, 4.4vw, 56px);
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  color: var(--ink-full);
+}
+
+/* ── L4  Bio ────────────────────────────────────── */
+.bio {
+  font-family: var(--f-mono);
+  font-size: 11px;
+  line-height: 1.72;
+  letter-spacing: 0.01em;
+  color: rgba(15, 15, 15, 0.68);
+  text-transform: none;
+}
+
+/* ── Sidebar divider ────────────────────────────── */
+.sidebar-divider {
+  width: 100%;
+  height: 1px;
+  background: var(--ink-rule);
+  flex-shrink: 0;
+}
+
+/* ── Contact ────────────────────────────────────── */
+.contact { display: flex; flex-direction: column; gap: 2px; }
+
+.contact-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  min-height: 34px;
+  padding: 7px 0;
+  opacity: 0.76;
+  transition:
+    transform var(--t-fast),
+    opacity var(--t-fast),
+    color var(--t-fast);
+}
+
+.contact-item::after {
+  content: "";
+  position: absolute;
+  left: 22px;
+  bottom: 2px;
+  width: 0;
+  height: 1px;
+  opacity: 0;
+  background: rgba(15, 15, 15, 0.18);
+  transition: width var(--t-fast), opacity var(--t-fast);
+}
+
+.contact-item:hover,
+.contact-item:focus-visible {
+  opacity: 1;
+  transform: translateX(6px);
+}
+
+.contact-item:hover::after,
+.contact-item:focus-visible::after {
+  width: calc(100% - 22px);
+  opacity: 1;
+}
+
+.icon-svg {
+  width: 13px;
+  height: 13px;
+  fill: var(--ink-full);
+  flex-shrink: 0;
+  display: block;
+  opacity: 0.75;
+  transition: transform var(--t-fast), opacity var(--t-fast);
+}
+
+.contact-item:hover .icon-svg,
+.contact-item:focus-visible .icon-svg {
+  opacity: 1;
+  transform: translateX(1px);
+}
+
+.contact-item span {
+  font-family: var(--f-mono);
+  font-size: 9px;
+  line-height: 1.6;
+  letter-spacing: 0.02em;
+  color: var(--ink-bio);
+  text-transform: none;
+  word-break: break-all;
+}
+
+/* ── Main content — natural flow, window scrolls ── */
+.main-content {
+  flex: 1;
+  min-width: 0;
+  max-width: 840px;
+  background: var(--surface);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-card);
+  box-shadow: var(--surface-shadow);
+  padding: clamp(32px, 4vw, 50px);
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  will-change: transform, opacity;
+  transform-origin: center top;
+}
+
+.accent-word {
+  --accent-color: var(--accent-cyan);
+  position: relative;
+  display: inline-block;
+  transition:
+    color var(--t-fast),
+    opacity var(--t-fast),
+    text-shadow var(--t-fast);
+}
+
+.accent-word--cyan { --accent-color: var(--accent-cyan); }
+.accent-word--violet { --accent-color: var(--accent-violet); }
+.accent-word--pink { --accent-color: var(--accent-pink); }
+.accent-word--amber { --accent-color: var(--accent-amber); }
+.accent-word--lime { --accent-color: var(--accent-lime); }
+
+.glyph-word {
+  position: relative;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .accent-word:hover,
+  .accent-word:focus-visible {
+    color: var(--accent-color);
+    text-shadow: 0 0 18px color-mix(in srgb, var(--accent-color) 24%, transparent);
+  }
+
+  .glyph-word::after {
+    content: attr(data-glyph);
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    color: var(--accent-color);
+    transform: translateY(60%);
+    transition:
+      transform var(--t-fast),
+      opacity var(--t-fast),
+      letter-spacing var(--t-fast);
+    pointer-events: none;
+  }
+
+  .glyph-word:hover,
+  .glyph-word:focus-visible {
+    color: transparent;
+    text-shadow: none;
+  }
+
+  .glyph-word:hover::after,
+  .glyph-word:focus-visible::after {
+    opacity: 1;
+    transform: translateY(0);
+    letter-spacing: 0.04em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glyph-word::after {
+    display: none;
+  }
+}
+
+/* ── Section shell ──────────────────────────────── */
+.section { display: flex; flex-direction: column; gap: 22px; }
+
+/* ── L1  Section label ──────────────────────────── */
+.section-label {
+  font-family: var(--f-mono);
+  font-weight: 400;
+  font-size: 9px;
+  line-height: 1;
+  letter-spacing: 0.22em;
+  color: rgba(15, 15, 15, 0.56);
+  text-transform: uppercase;
+}
+
+/* ── Section rule ───────────────────────────────── */
+.section-rule {
+  width: 100%;
+  height: 1px;
+  background: var(--ink-rule);
+  flex-shrink: 0;
+}
+
+/* ── L2  Role / edu titles ──────────────────────── */
+.role-title {
+  font-family: var(--f-display);
+  font-weight: 400;
+  font-size: 26px;
+  line-height: 1.18;
+  letter-spacing: -0.02em;
+  color: var(--ink-full);
+}
+
+/* ── L3  Meta row ───────────────────────────────── */
+.meta-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.org-logo {
+  width: 15px;
+  height: 15px;
+  object-fit: contain;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.org-name {
+  flex: 1;
+  font-family: var(--f-mono);
+  font-size: 8.75px;
+  line-height: 1;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-org);
+}
+
+.meta-date {
+  font-family: var(--f-mono);
+  font-size: 8.75px;
+  line-height: 1;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--ink-date);
+}
+
+/* ── L4  Bullets ────────────────────────────────── */
+.jobs { display: flex; flex-direction: column; gap: 30px; }
+.job  { display: flex; flex-direction: column; gap: 12px; }
+
+.bullets {
+  padding-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.bullets li {
+  font-family: var(--f-mono);
+  font-size: 11px;
+  line-height: 1.74;
+  letter-spacing: 0.01em;
+  text-transform: none;
+  color: var(--ink-body);
+}
+
+.bullets li::marker {
+  color: rgba(15, 15, 15, 0.36);
+}
+
+/* ── Education ──────────────────────────────────── */
+.edu-block { display: flex; flex-direction: column; gap: 12px; }
+
+/* ── Tools — Neo Pop chips ──────────────────────── */
+.tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.tool-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px 8px 10px;
+  border: 1px solid rgba(15, 15, 15, 0.10);
+  background: rgba(255, 255, 255, 0.72);
+  box-shadow: 0 10px 22px rgba(15, 15, 15, 0.06);
+  border-radius: 999px;
+  transition:
+    transform var(--t-fast),
+    box-shadow var(--t-fast),
+    border-color var(--t-fast),
+    background-color var(--t-fast);
+  cursor: default;
+}
+
+.tool-chip:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 28px rgba(15, 15, 15, 0.10);
+  border-color: rgba(15, 15, 15, 0.16);
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.tool-icon {
+  width: 15px;
+  height: 15px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.tool-chip span {
+  font-family: var(--f-mono);
+  font-size: 8.25px;
+  line-height: 1;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-body);
+  white-space: nowrap;
+}
+
+/* ════════════════════════════════════════════════════
+   RESPONSIVE
+   ════════════════════════════════════════════════════ */
+
+/* ── 1024–1279px ─────────────────────────────────── */
+@media (max-width: 1279px) {
+  :root {
+    --sidebar-w:   300px;
+    --pad-h:       36px;
+    --col-gap:     44px;
+  }
+  .lp-card { width: clamp(320px, 58vw, 580px); }
+  .lp-card-title { font-size: clamp(44px, 5.5vw, 84px); }
+  .main-content { max-width: 800px; }
+}
+
+/* ── 768–1023px ──────────────────────────────────── */
+@media (max-width: 1023px) {
+  :root {
+    --sidebar-w:   260px;
+    --pad-h:       28px;
+    --col-gap:     36px;
+  }
+  .name { font-size: 40px; }
+  .lp-card { width: clamp(280px, 70vw, 500px); }
+  .lp-card-title { font-size: clamp(38px, 6vw, 70px); }
+  .main-content {
+    max-width: 100%;
+    padding: 30px 28px 34px;
+    gap: 40px;
+  }
+  .role-title { font-size: 24px; }
+}
+
+/* ── Mobile <640px ───────────────────────────────── */
+@media (max-width: 639px) {
+  #landing { height: 100vh; overflow: hidden; }
+
+  .lp-card {
+    width: clamp(260px, 88vw, 380px);
+  }
+  .lp-card-title { font-size: clamp(36px, 9.5vw, 56px); }
+  .lp-card-num   { margin-bottom: 16px; }
+
+  /* Resume — single column */
+  #resume { background: var(--bg); }
+
+  .cv {
+    flex-direction: column;
+    gap: 40px;
+    padding: 40px 24px 60px;
+    max-width: 100%;
+  }
+
+  .sidebar {
+    position: relative;
+    top: auto;
+    width: 100%;
+    min-width: unset;
+    height: auto;
+    background: transparent;
+  }
+
+  .sidebar-inner {
+    height: auto;
+    padding: 0;
+    gap: 24px;
+  }
+
+  .main-content {
+    max-width: 100%;
+    padding: 28px 22px 32px;
+    border-radius: 22px;
+    gap: 34px;
+  }
+
+  .name { font-size: 36px; }
+  .bio  { font-size: 10.5px; }
+  .role-title { font-size: 22px; }
+  .bullets li { font-size: 10.5px; }
+  .contact-item span { font-size: 8.75px; }
+}

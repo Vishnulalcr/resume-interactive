@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en" class="is-loading">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vishnulal — Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Fixed dot-grid background -->
+  <canvas id="grid-canvas" aria-hidden="true"></canvas>
+
+  <!-- ─────────────────────────────────────────────
+       PRELOADER
+  ───────────────────────────────────────────── -->
+  <div id="preloader" aria-hidden="true">
+    <div class="preloader-inner">
+      <span>V</span><span>I</span><span>S</span><span>H</span>
+      <span>N</span><span>U</span><span>L</span><span>A</span>
+      <span>L</span><span>C</span><span>R</span>
+    </div>
+  </div>
+
+  <!-- ─────────────────────────────────────────────
+       ZONE 1 — LANDING (dark, full-screen card stack)
+  ───────────────────────────────────────────── -->
+  <section id="landing" aria-label="Introduction">
+
+    <!--
+      4 full-viewport cards, absolutely positioned over each other.
+      They slide up from below one by one, stacking like a deck.
+      z-index order: card-01 bottom, card-04 top.
+    -->
+
+    <div class="lp-card" id="card-01" aria-hidden="true">
+      <div class="lp-card-bg-num" aria-hidden="true">01</div>
+      <div class="lp-card-inner">
+        <span class="lp-card-num">01</span>
+        <h3 class="lp-card-title"><span class="glyph-word accent-word accent-word--violet" data-glyph="M0T!ON">Motion</span><br><span class="accent-word accent-word--cyan">Design</span></h3>
+        <div class="lp-card-rule"></div>
+        <p class="lp-card-body">Lead Motion Designer at Ola.<br>Visual language of India's EV era.</p>
+        <p class="lp-card-tools">AE · C4D · Blender</p>
+      </div>
+    </div>
+
+    <div class="lp-card" id="card-02" aria-hidden="true">
+      <div class="lp-card-bg-num" aria-hidden="true">02</div>
+      <div class="lp-card-inner">
+        <span class="lp-card-num">02</span>
+        <h3 class="lp-card-title"><span class="accent-word accent-word--amber">Product</span><br><span class="glyph-word accent-word accent-word--pink" data-glyph="DES!GN">Design</span></h3>
+        <div class="lp-card-rule"></div>
+        <p class="lp-card-body">End-to-end product design across MoveOS.<br>900,000+ users.</p>
+        <p class="lp-card-tools">Figma · Unreal</p>
+      </div>
+    </div>
+
+    <div class="lp-card" id="card-03" aria-hidden="true">
+      <div class="lp-card-bg-num" aria-hidden="true">03</div>
+      <div class="lp-card-inner">
+        <span class="lp-card-num">03</span>
+        <h3 class="lp-card-title"><span class="accent-word accent-word--pink">UX &amp; Motion</span><br><span class="glyph-word accent-word accent-word--lime" data-glyph="SYS+EMS">Systems</span></h3>
+        <div class="lp-card-rule"></div>
+        <p class="lp-card-body">HMI systems and companion<br>app experiences.</p>
+        <p class="lp-card-tools">Figma · AE</p>
+      </div>
+    </div>
+
+    <div class="lp-card" id="card-04" aria-hidden="true">
+      <div class="lp-card-bg-num" aria-hidden="true">04</div>
+      <div class="lp-card-inner">
+        <span class="lp-card-num">04</span>
+        <h3 class="lp-card-title"><span class="glyph-word accent-word accent-word--amber" data-glyph="V!SUAL">Visual</span> &amp;<br><span class="accent-word accent-word--cyan">3D Design</span></h3>
+        <div class="lp-card-rule"></div>
+        <p class="lp-card-body">3D campaigns, generative art,<br>cinematic films.</p>
+        <p class="lp-card-tools">Maya · C4D · Blender · Unreal</p>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ─────────────────────────────────────────────
+       ZONE 2 — RESUME (light, sticky sidebar)
+  ───────────────────────────────────────────── -->
+  <section id="resume">
+    <div class="cv">
+
+      <!-- ── LEFT SIDEBAR — sticky, never scrolls ── -->
+      <aside class="sidebar">
+        <div class="sidebar-inner">
+
+          <div class="profile-photo-wrap">
+            <img src="assets/images/profile.jpg" alt="Vishnulal" class="profile-photo">
+          </div>
+
+          <div class="intro">
+            <h1 class="name"><span class="glyph-word accent-word accent-word--violet" data-glyph="V!SHNULAL">Vishnulal</span></h1>
+            <p class="bio">
+              Multi-disciplinary designer with deep experience across
+              <span class="accent-word accent-word--cyan">motion graphics</span>,
+              3D, visual effects, branding and
+              <span class="accent-word accent-word--amber">generative art</span>.
+              I've spent my career blending craft, technology and
+              <span class="accent-word accent-word--violet">storytelling</span>
+              to create visual experiences that feel expressive,
+              <span class="accent-word accent-word--pink">cinematic</span>
+              and intentional.
+            </p>
+          </div>
+
+          <div class="sidebar-divider"></div>
+
+          <nav class="contact" aria-label="Contact">
+            <a href="tel:+919497221501" class="contact-item">
+              <svg class="icon-svg" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.61 21 3 13.39 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1.02l-2.2 2.2Z"/>
+              </svg>
+              <span>+91 9497221501</span>
+            </a>
+            <a href="mailto:crvishnulal@gmail.com" class="contact-item">
+              <svg class="icon-svg" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Zm0 4-8 5-8-5V6l8 5 8-5v2Z"/>
+              </svg>
+              <span>crvishnulal@gmail.com</span>
+            </a>
+            <a href="https://linkedin.com/in/vishnulalcr/" target="_blank" rel="noopener" class="contact-item">
+              <svg class="icon-svg" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2ZM9 17H6.5v-7H9v7Zm-1.25-8.27a1.37 1.37 0 1 1 0-2.74 1.37 1.37 0 0 1 0 2.74ZM18 17h-2.5v-3.5c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5V17H10v-7h2.5v1.08A3.23 3.23 0 0 1 15 10c1.65 0 3 1.35 3 3v4Z"/>
+              </svg>
+              <span>linkedin.com/in/vishnulalcr/</span>
+            </a>
+          </nav>
+
+        </div>
+      </aside>
+
+      <!-- ── MAIN CONTENT — natural flow, window scrolls ── -->
+      <main class="main-content">
+
+        <!-- Experience -->
+        <section class="section">
+          <h2 class="section-label"><span class="glyph-word accent-word accent-word--amber" data-glyph="EXPER!ENCE">Experience</span></h2>
+
+          <div class="jobs">
+
+            <article class="job">
+              <h3 class="role-title">Lead <span class="glyph-word accent-word accent-word--violet" data-glyph="M0T!ON">Motion</span>/<span class="accent-word accent-word--cyan">Visual</span> Designer</h3>
+              <div class="meta-row">
+                <img src="assets/images/logo-ola.png" alt="" class="org-logo">
+                <span class="org-name accent-word accent-word--amber">Ola Electric</span>
+                <span class="meta-date">Mar 2021 – Present</span>
+              </div>
+              <ul class="bullets">
+                <li>Led the complete visual identity of Ola Electric — from market entry to brand perception today. Directed the Multi-Color lineup announcement and created the debut product film as founding designer, establishing the visual language for India's EV market.</li>
+                <li>Led major UX initiatives across MoveOS — Ola's first advanced two-wheeler operating system. Defined the app's 3D-heavy design language across interactions, states, and interface elements for HMI and companion app experiences.</li>
+                <li>Owned end-to-end design for flagship Moods — Vintage and Care modes across S1 Pro generations. Vintage reinterprets 80s luxury dashboards; Care provides energy insights and riding analytics, blending eco-friendly themes with Indian cultural references.</li>
+                <li>Incremental MoveOS releases improved polish and usability across 900,000+ users, strengthening retention and brand loyalty.</li>
+                <li>Led the complete redesign and launch of Kruti.AI — an AI system that handles complex research, booking rides, paying bills, generating content, and guiding decisions. Directed the launch film introducing Kruti to the public.</li>
+              </ul>
+            </article>
+
+            <article class="job">
+              <h3 class="role-title">Senior 3D <span class="accent-word accent-word--pink">Motion</span> Designer</h3>
+              <div class="meta-row">
+                <img src="assets/images/logo-housejoy.png" alt="" class="org-logo">
+                <span class="org-name accent-word accent-word--pink">HouseJoy</span>
+                <span class="meta-date">Aug 2020 – Mar 2021</span>
+              </div>
+              <ul class="bullets">
+                <li>Part of a small design team pushing a high bar of craft, polish, and brand experience.</li>
+                <li>Crafted end-to-end rebranding for HouseJoy.</li>
+                <li>Worked closely with developers to ensure shipped flows and motion matched intended behaviours across devices on the HouseJoy app.</li>
+              </ul>
+            </article>
+
+            <article class="job">
+              <h3 class="role-title">Creative Controller — <span class="accent-word accent-word--lime">Media</span> and Innovation</h3>
+              <div class="meta-row">
+                <img src="assets/images/logo-ftw.png" alt="" class="org-logo">
+                <span class="org-name accent-word accent-word--violet">FTW — Bangalore</span>
+                <span class="meta-date">Mar 2018 – Jun 2020</span>
+              </div>
+              <ul class="bullets">
+                <li>Led client relationships for major brands including Google, Infosys, and Merhab-Dubai, ensuring project alignment with creative and business objectives.</li>
+                <li>Directed cross-functional teams of animators and motion designers to deliver high-quality animation and motion design work across multiple projects simultaneously.</li>
+                <li>Collaborated with production houses, animators, and designers to produce product videos, commercials, and social media content for diverse client campaigns.</li>
+              </ul>
+            </article>
+
+          </div>
+        </section>
+
+        <hr class="section-rule">
+
+        <!-- Education -->
+        <section class="section">
+          <h2 class="section-label"><span class="glyph-word accent-word accent-word--cyan" data-glyph="EDUCAT!ON">Education</span></h2>
+          <div class="edu-block">
+            <h3 class="role-title">
+              Bsc VISCOM / Diploma in Visual Communication from ELIA
+              (European League of Institutes of the Arts, Amsterdam)
+            </h3>
+            <div class="meta-row">
+              <span class="org-name accent-word accent-word--lime">NICC Bangalore</span>
+              <span class="meta-date">Aug 2011 – Aug 2014</span>
+            </div>
+          </div>
+        </section>
+
+        <hr class="section-rule">
+
+        <!-- Tools -->
+        <section class="section">
+          <h2 class="section-label"><span class="glyph-word accent-word accent-word--violet" data-glyph="T00LS">Tools</span></h2>
+          <div class="tools">
+            <div class="tool-chip">
+              <img src="assets/images/tool-c4d.png"     alt="Cinema 4D"     class="tool-icon">
+              <span>C4D</span>
+            </div>
+            <div class="tool-chip">
+              <img src="assets/images/tool-maya.png"    alt="Maya"          class="tool-icon">
+              <span>Maya</span>
+            </div>
+            <div class="tool-chip">
+              <img src="assets/images/tool-blender.png" alt="Blender"       class="tool-icon">
+              <span>Blender</span>
+            </div>
+            <div class="tool-chip">
+              <img src="assets/images/tool-ae.png"      alt="After Effects" class="tool-icon">
+              <span>After Effects</span>
+            </div>
+            <div class="tool-chip">
+              <img src="assets/images/tool-unreal.png"  alt="Unreal Engine" class="tool-icon">
+              <span>Unreal Engine</span>
+            </div>
+            <div class="tool-chip">
+              <img src="assets/images/tool-figma.png"   alt="Figma"         class="tool-icon">
+              <span>Figma</span>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div><!-- /.cv -->
+  </section><!-- /#resume -->
+
+  <!-- GSAP -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="grid.js"></script>
+  <script src="animations.js"></script>
+</body>
+</html>

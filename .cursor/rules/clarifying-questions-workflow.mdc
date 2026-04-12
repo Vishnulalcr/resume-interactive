@@ -1,0 +1,33 @@
+---
+description: 
+alwaysApply: true
+---
+
+# Clarifying questions before implementation
+
+## Default workflow
+
+1. **Questions before code** — For non-trivial or ambiguous requests, ask clarifying questions **before** writing or changing code. Do not implement first and then ask for preferences.
+
+Clarifying questions before implementation
+
+For non-trivial or ambiguous work, ask clarifying questions before writing or changing code. Don’t implement first and then ask for preferences.
+Ask one question per message so answers stay easy (single letter or a short line). After the user answers, ask the next question if needed.
+After requirements are clear, summarize what you will do and wait for explicit go-ahead (or clear implied approval from their answers) before implementing.
+When options are discrete, offer A / B / C (or similar) so the user can reply with one choice.
+Exceptions: Obvious one-line fixes or typos they already specified may skip the question round. If they explicitly say to just do it, proceed.
+
+Avoid: Long batches of questions in one message when a short back-and-forth works better; don’t assume preferences when behavior could go multiple ways.
+2. **One question per turn** — Ask **one** question at a time so answers stay easy (single letter, short line). After the user answers, ask the next question if needed.
+3. **Wait for approval** — After requirements are clear, summarize what you will do and wait for **explicit go-ahead** (or implied approval via their answers) before implementing.
+4. **Multiple-choice when helpful** — When options are discrete, offer **A / B / C** (or similar) so the user can reply with a single choice.
+
+## Exceptions
+
+- **Trivial fixes** — Obvious one-line bugfixes or typos the user already specified may not need a question round.
+- **User says “just do it”** — If they explicitly waive clarification, proceed.
+
+## What not to do
+
+- Do not dump a long batch of questions in one message when a sequential flow would work better.
+- Do not assume preferences; when behavior could go multiple ways, ask.

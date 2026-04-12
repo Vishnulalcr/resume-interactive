@@ -1,0 +1,31 @@
+---
+description: Figma MCP + StoryTool tokens — library (A) and token parity (B)
+alwaysApply: false
+---
+
+# StoryTool design system (Figma + code)
+
+## Canonical tokens (code)
+
+- **CSS:** `design-tokens.css` — imported by `style.css`; edit here first for app theme.
+- **Config:** `design-tokens.config.json` — Figma URLs, typography notes, `mapsToColor` (not generated).
+- **JSON:** `design-tokens.json` — run **`npm run sync-tokens`** after changing `design-tokens.css` or color mappings in config.
+- **Figma push:** Run **`npm run figma:variables`** to regenerate `scripts/figma-variables-use-figma.generated.js`, then in Cursor (Figma MCP authenticated) run **`use_figma`** with `fileKey` from `design-tokens.config.json` and paste that script (see banner in the file). Creates collections **StoryTool / Color**, **Layout**, **Motion**, **Typography** with `WEB` code syntax where applicable.
+
+## Figma file
+
+- **File key:** `Sfv1LZbfeg0QEDZhhjQDKu` (StoryTool-Design-System)
+- **Design URL:** `https://www.figma.com/design/Sfv1LZbfeg0QEDZhhjQDKu/StoryTool-Design-System`
+
+When using Figma MCP, pass this file (or a frame URL with `node-id`) so tools target the right document.
+
+## Workflow
+
+**A — Library in Figma:** Use official Figma MCP (`use_figma` with `figma-use` skill). Build variables from `design-tokens.json`, then components (spine, panels, dock, nodes) that reference those variables. Prefer incremental `use_figma` calls; return node IDs after creates.
+
+**B — Token parity:** After changing `design-tokens.css`, update `design-tokens.json` and the matching Figma variable collection. Do not duplicate one-off hex values in new CSS — add a token first.
+
+## Skills
+
+- `figma-use` before any `use_figma` call.
+- `figma-generate-library` when creating or restructuring variables / design-system pages in Figma from the codebase.
