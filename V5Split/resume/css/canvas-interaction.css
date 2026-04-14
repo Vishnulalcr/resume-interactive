@@ -1,0 +1,13 @@
+#bentoPanRoot.is-pannable {
+  cursor: grab;
+  touch-action: none;
+}
+#bentoPanRoot.is-panning {
+  cursor: grabbing;
+}
+#worksCanvas.is-pannable.is-panning {
+  cursor: grabbing;
+}
+#worksCanvas.is-pannable {
+  touch-action: none;
+}

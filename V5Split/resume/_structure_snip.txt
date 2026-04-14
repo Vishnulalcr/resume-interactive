@@ -1,0 +1,80 @@
+V517.93H1668.34V527.07H1640.66V545.479H1677.48V554.746H1631.52V522.5ZM1711.68 550.43V545.732H1720.82V555H1711.68V550.43Z" fill="currentColor"/>
+      </svg>
+    </div>
+  </div>
+</div>
+</section>
+
+<section id="bio-section">
+  <div id="stage">
+    <div id="text-block"></div>
+  </div>
+</section>
+
+<div id="wcScrollDriver">
+<div id="wcStickyFrame">
+<section id="stats" aria-label="Stats">
+  <div class="stats-inner">
+    <div class="stat-cell">
+      <span class="stat-num" data-count="12" data-suffix="">0</span>
+      <span class="stat-label">YEARS</span>
+    </div>
+    <div class="stat-cell">
+      <span class="stat-num" data-count="5" data-suffix="+">0</span>
+      <span class="stat-label">COMPANIES</span>
+    </div>
+    <div class="stat-cell">
+      <span class="stat-num" data-count="900" data-suffix="K+">0</span>
+      <span class="stat-label">USERS</span>
+    </div>
+    <div class="stat-cell">
+      <span class="stat-num stat-infinity" aria-hidden="true">∞</span>
+      <span class="stat-label">FRAMES</span>
+    </div>
+  </div>
+</section>
+
+<!-- WORK CANVAS SECTION -->
+<section id="worksCanvas" style="position:relative;z-index:2;width:100%;height:100vh;overflow:hidden;background:transparent;padding:30px;box-sizing:border-box;display:flex;flex-direction:column;">
+  <div style="margin-bottom:24px;flex-shrink:0;">
+    <h2 style="font-family:'freecam2',monospace;font-size:36px;font-weight:400;letter-spacing:-0.025em;color:rgba(255,255,255,.92);margin:0;padding:0;line-height:1.1;">WORK CANVAS</h2>
+  </div>
+  <div style="position:relative;width:100%;height:100%;background:linear-gradient(135deg, rgba(10,10,11,1) 0%, rgba(15,15,18,0.95) 100%);border:1px solid rgba(255,255,255,.08);overflow:hidden;display:flex;align-items:center;justify-content:center;box-shadow:inset 0 0 40px rgba(0,0,0,.6);flex:1;">
+    <div style="position:relative;width:100%;height:100%;overflow:hidden;">
+      <div id="wcGallery" style="position:absolute;top:0;left:0;width:auto;height:auto;cursor:grab;user-select:none;will-change:transform;touch-action:none;"></div>
+    </div>
+  </div>
+
+  <!-- LIGHTBOX -->
+  <div id="wcLb" role="dialog" aria-modal="true" style="position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;background:rgba(10,10,11,.8);backdrop-filter:blur(20px) saturate(1.1);-webkit-backdrop-filter:blur(20px) saturate(1.1);opacity:0;pointer-events:none;">
+    <div id="wcLbInner" style="position:relative;display:flex;flex-direction:column;align-items:center;gap:16px;will-change:transform;transform:scale(0.92) translate(0, 16px);">
+      <button type="button" id="wcLbClose" aria-label="Close preview" style="position:absolute;top:16px;right:16px;width:48px;height:48px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:32px;line-height:1;color:rgba(255,255,255,.85);font-family:monospace;padding:0;transition:background 0.2s ease, border-color 0.2s ease;">&times;</button>
+      <div style="position:relative;display:block;border-radius:4px;overflow:hidden;">
+        <img id="wcLbImg" src="" alt="" style="max-width:88vw;max-height:80vh;display:block;object-fit:contain;border:1px solid rgba(255,255,255,.12);">
+        <video id="wcLbVid" controls playsinline style="max-width:88vw;max-height:80vh;display:none;object-fit:contain;border:1px solid rgba(255,255,255,.12);"></video>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;">
+        <span id="wcLbName" style="font-family:sans-serif;font-size:clamp(18px, 2.2vw, 28px);font-weight:500;letter-spacing:-.02em;color:rgba(255,255,255,.92);"></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="cards-wrap">
+<div id="cards-stage">
+  <div class="crd" id="c1">
+    <span class="crd-num">01</span>
+    <span class="crd-title" data-scramble>Motion Design</span>
+    <p class="crd-body">I design and create purposeful animations to effectively convey messages in both video and websites. Specializing in motion graphics, I focus on the flow and smoothness of movement, balancing visual impact with intuitive usability.</p>
+    <span class="crd-tools">AE - C4D - BLENDER</span>
+  </div>
+  <div class="crd" id="c2">
+    <span class="crd-num">02</span>
+    <span class="crd-title" data-scramble>UX Experience Design</span>
+    <p class="crd-body">I design intuitive, motion-led user experiences where every interaction has intent. Leveraging my motion skills, I bring interfaces to life, crafting flows, states, and micro-interactions that feel alive and instinctively right.</p>
+    <span class="crd-tools">FIGMA - UNREAL ENGINE</span>
+  </div>
+  <div class="crd" id="c3">
+    <span class="crd-num">03</span>
+    <span class="crd-title" data-scramble>Visual Design</span>
+    <p class="crd-body">I create designs that visually embody a brand vision and concept, especially in video content. By unif

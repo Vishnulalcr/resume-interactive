@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Works Canvas Diagnostic Tool</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0a0a0b;
+            color: #e0e0e0;
+            padding: 40px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #4ade80;
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+        .test-section {
+            background: #1a1a1f;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .test-title {
+            font-weight: bold;
+            color: #60a5fa;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        .status {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        .status.loading {
+            background: #fbbf24;
+            color: #000;
+        }
+        .status.success {
+            background: #4ade80;
+            color: #000;
+        }
+        .status.error {
+            background: #ef4444;
+            color: #fff;
+        }
+        .test-result {
+            margin-top: 10px;
+            padding: 10px;
+            background: #0f0f12;
+            border-left: 3px solid #4ade80;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            word-break: break-all;
+        }
+        .test-result.error {
+            border-left-color: #ef4444;
+            color: #fca5a5;
+        }
+        .test-result.warning {
+            border-left-color: #fbbf24;
+            color: #fcd34d;
+        }
+        button {
+            background: #4ade80;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        button:hover {
+            background: #22c55e;
+        }
+        .image-preview {
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+            border-radius: 4px;
+            margin-top: 10px;
+            border: 1px solid #333;
+        }
+        .success-box {
+            background: #064e3b;
+            border: 1px solid #10b981;
+            color: #86efac;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 Works Canvas Diagnostic Tool</h1>
+
+        <div class="success-box" id="successBox" style="display: none;">
+            ✓ All tests passed! Your gallery should be working. If images still aren't showing, scroll down for more details.
+        </div>
+
+        <div class="test-section">
+            <div class="test-title">
+                1. Check Manifest File
+                <span class="status loading" id="manifestStatus">Testing...</span>
+            </div>
+            <div id="manifestResult"></div>
+        </div>
+
+        <div class="test-section">
+            <div class="test-title">
+                2. Check Image Files
+                <span class="status loading" id="imageStatus">Testing...</span>
+            </div>
+            <div id="imageResult"></div>
+        </div>
+
+        <div class="test-section">
+            <div class="test-title">
+                3. Test Gallery Initialization
+                <span class="status loading" id="galleryStatus">Testing...</span>
+            </div>
+            <div id="galleryResult"></div>
+        </div>
+
+        <div class="test-section">
+            <div class="test-title">
+                4. Browser Information
+            </div>
+            <div id="browserResult"></div>
+        </div>
+
+        <div class="test-section">
+            <div class="test-title">
+                5. Quick Fix
+            </div>
+            <p>Try these steps:</p>
+            <button onclick="location.href='index.html'">Reload Resume Page</button>
+            <button onclick="clearCache()">Clear Cache & Reload</button>
+            <button onclick="openConsole()">Open Browser Console (F12)</button>
+        </div>
+    </div>
+
+    <script>
+        const BASE = 'assets/images/PortfolioImages/';
+        const MANIFEST_URL = BASE + 'manifest.json';
+        let allTestsPassed = true;
+
+        // Test 1: Check Manifest
+        fetch(MANIFEST_URL)
+            .then(res => {
+                if (!res.ok) throw new Error('HTTP ' + res.status);
+                return res.json();
+            })
+            .then(data => {
+                const count = data.files ? data.files.length : 0;
+                document.getElementById('manifestStatus').className = 'status success';
+                document.getElementById('manifestStatus').textContent = 'OK';
+                document.getElementById('manifestResult').innerHTML = `
+                    <div class="test-result">
+                        ✓ Manifest loaded successfully<br>
+                        📁 Files in manifest: <strong>${count}</strong><br>
+                        📍 Location: <code>${MANIFEST_URL}</code>
+                    </div>
+                `;
+
+                // Test 2: Check first few images
+                testImages(data.files);
+            })
+            .catch(err => {
+                allTestsPassed = false;
+                document.getElementById('manifestStatus').className = 'status error';
+                document.getElementById('manifestStatus').textContent = 'FAILED';
+                document.getElementById('manifestResult').innerHTML = `
+                    <div class="test-result error">
+                        ✗ Failed to load manifest: ${err.message}<br>
+                        📍 Tried: <code>${MANIFEST_URL}</code><br>
+                        💡 Make sure the server is running!<br>
+                        💡 Check that manifest.json exists in: assets/images/PortfolioImages/
+                    </div>
+                `;
+                document.getElementById('imageStatus').className = 'status error';
+                document.getElementById('imageStatus').textContent = 'SKIPPED';
+            });
+
+        function testImages(files) {
+            if (!files || files.length === 0) {
+                document.getElementById('imageStatus').className = 'status error';
+                document.getElementById('imageStatus').textContent = 'FAILED';
+                document.getElementById('imageResult').innerHTML = `
+                    <div class="test-result error">
+                        ✗ No files found in manifest
+                    </div>
+                `;
+                allTestsPassed = false;
+                return;
+            }
+
+            const testCount = Math.min(3, files.length);
+            let successCount = 0;
+            let html = `<div class="test-result">Testing ${testCount} images...</div>`;
+
+            for (let i = 0; i < testCount; i++) {
+                const file = files[i].file || files[i];
+                const img = new Image();
+                const url = BASE + file;
+
+                img.onload = () => {
+                    successCount++;
+                    updateImageStatus(successCount, testCount);
+                };
+                img.onerror = () => {
+                    allTestsPassed = false;
+                    updateImageStatus(successCount, testCount, file);
+                };
+
+                img.src = url;
+            }
+
+            function updateImageStatus(success, total, failedFile) {
+                if (success + (total - success) === total) {
+                    if (success === total) {
+                        document.getElementById('imageStatus').className = 'status success';
+                        document.getElementById('imageStatus').textContent = 'OK';
+                        document.getElementById('imageResult').innerHTML = `
+                            <div class="test-result">
+                                ✓ ${success}/${total} images loaded successfully<br>
+                                📁 Images are accessible at: <code>${BASE}</code><br>
+                                Sample: <code>${files[0].file || files[0]}</code><br>
+                                <img src="${BASE + (files[0].file || files[0])}" class="image-preview" alt="Sample">
+                            </div>
+                        `;
+                    } else {
+                        document.getElementById('imageStatus').className = 'status error';
+                        document.getElementById('imageStatus').textContent = 'FAILED';
+                        allTestsPassed = false;
+                        document.getElementById('imageResult').innerHTML = `
+                            <div class="test-result error">
+                                ✗ Some images failed to load<br>
+                                Failed: <code>${failedFile}</code><br>
+                                💡 Check that all files in manifest.json actually exist<br>
+                                💡 Check file permissions<br>
+                                💡 Try: <code>ls assets/images/PortfolioImages/</code>
+                            </div>
+                        `;
+                    }
+                    document.getElementById('galleryStatus').className = 'status success';
+                    document.getElementById('galleryStatus').textContent = 'OK';
+                    document.getElementById('galleryResult').innerHTML = `
+                        <div class="test-result">
+                            ✓ Gallery should initialize correctly<br>
+                            🎨 Total images available: ${files.length}<br>
+                            ⚙️ GSAP library: ${typeof gsap !== 'undefined' ? '✓ Loaded' : '✗ Missing'}
+                        </div>
+                    `;
+
+                    if (allTestsPassed) {
+                        document.getElementById('successBox').style.display = 'block';
+                    }
+                }
+            }
+        }
+
+        // Browser Info
+        document.getElementById('browserResult').innerHTML = `
+            <div class="test-result">
+                🌐 Browser: ${navigator.userAgent.split(' ').slice(-2).join(' ')}<br>
+                📍 Current URL: <code>${location.href}</code><br>
+                🔌 Protocol: <code>${location.protocol}</code><br>
+                💾 Local Storage: ${typeof(Storage) !== "undefined" ? '✓ Supported' : '✗ Not supported'}
+            </div>
+        `;
+
+        function clearCache() {
+            if ('caches' in window) {
+                caches.keys().then(names => {
+                    names.forEach(name => caches.delete(name));
+                });
+            }
+            location.reload();
+        }
+
+        function openConsole() {
+            console.log('%c🔍 Browser Console Opened', 'color: #4ade80; font-size: 16px; font-weight: bold;');
+            alert('Console is now open. Check for any error messages.');
+        }
+
+        // Log to console
+        console.log('%c🔧 Works Canvas Diagnostic Running...', 'color: #4ade80; font-weight: bold; font-size: 14px;');
+        console.log('Manifest URL:', MANIFEST_URL);
+        console.log('BASE path:', BASE);
+    </script>
+</body>
+</html>

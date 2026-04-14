@@ -1,0 +1,10 @@
+/* HERO (sphere + statement — one pinned stage) */
+#hero{position:relative;z-index:1}
+#hs{width:100%;height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:72px 8vw 56px;overflow:hidden;position:relative;font-size:0}
+#sphere-visual{position:absolute;inset:0;z-index:1;display:flex;align-items:center;justify-content:center;transform-origin:50% 50%;will-change:transform,filter,opacity}
+#sphere-visual #sphere-canvas{position:absolute;inset:0;width:100%;height:100%;z-index:1}
+#hero-statement{position:relative;z-index:3;display:block;width:100%;max-width:100%;margin:0;padding:0;text-align:center;pointer-events:none;box-sizing:border-box;opacity:0}
+#hero-statement .hero-svg-wrap{display:block;width:clamp(560px,92vw,1600px);margin:0 auto}
+#hero-statement .hero-svg-wrap svg{display:block;width:100%;height:auto}
+
+

@@ -1,0 +1,105 @@
+#preview-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(6, 6, 8, 0.82);
+  backdrop-filter: blur(16px) saturate(1.1);
+  -webkit-backdrop-filter: blur(16px) saturate(1.1);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.28s ease;
+}
+
+#preview-overlay.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#preview-overlay .pv-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 92vw;
+  max-height: 88vh;
+  transform: scale(0.94);
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+#preview-overlay.is-open .pv-inner {
+  transform: scale(1);
+}
+
+#preview-overlay .pv-img {
+  max-width: 92vw;
+  max-height: 88vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.65);
+  display: block;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+#preview-overlay .pv-hit {
+  position: absolute;
+  inset: 0;
+  cursor: zoom-out;
+}
+
+#preview-overlay .pv-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  background: rgba(12, 12, 14, 0.65);
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+#preview-overlay .pv-nav:hover {
+  background: rgba(24, 24, 28, 0.85);
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+#preview-overlay .pv-prev {
+  left: 12px;
+}
+
+#preview-overlay .pv-next {
+  right: 12px;
+}
+
+#preview-overlay .pv-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 2;
+  transition: background 0.2s ease;
+}
+
+#preview-overlay .pv-close:hover {
+  background: rgba(255, 255, 255, 0.16);
+}

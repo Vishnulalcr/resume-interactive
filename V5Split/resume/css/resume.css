@@ -1,0 +1,54 @@
+/* RESUME */
+#rz{position:relative;z-index:3;background:var(--light);padding-top:0}
+.rzp{width:100%;display:flex;justify-content:center}
+.rzcv{width:100%;max-width:1280px;display:flex;gap:52px;min-height:100vh}
+.rzsb{width:364px;min-width:364px;flex-shrink:0;padding:56px 0 80px 44px;display:flex;flex-direction:column;gap:26px;position:sticky;top:0;height:100vh;overflow:hidden}
+.rzppw{width:84px;height:84px;border-radius:50%;overflow:hidden;border:1px solid rgba(0,0,0,.09);flex-shrink:0}
+.rzpp{width:100%;height:100%;object-fit:cover;object-position:center top}
+.rznm{font-family:var(--fs);font-weight:var(--fw-display);font-size:48px;line-height:1.0;letter-spacing:-.025em;color:var(--ink);margin-bottom:14px;cursor:pointer;user-select:none;display:inline-block}
+.rzbio{font-family:var(--f);font-size:9.5px;line-height:2.0;color:rgba(0,0,0,.80);text-transform:uppercase}
+.rzdiv{width:100%;height:1px;background:rgba(0,0,0,.10);flex-shrink:0}
+.rzcon{display:flex;flex-direction:column;gap:10px}
+.rzci{display:flex;align-items:center;gap:8px;transition:opacity .18s}.rzci:hover{opacity:.5}
+.rzsvg{width:13px;height:13px;fill:var(--ink);flex-shrink:0;opacity:.75}
+.rzci span{font-family:var(--f);font-size:8.5px;line-height:1.6;color:rgba(0,0,0,.80);text-transform:uppercase;word-break:break-all}
+.rzmc{flex:1;min-width:0;height:100vh;overflow-y:auto;overflow-x:hidden;padding:56px 44px 80px 0;display:flex;flex-direction:column;gap:40px;scrollbar-width:none}
+.rz-resume-kicker{font-family:var(--f);font-size:clamp(10px,1.2vw,12px);font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:var(--ink);margin:0 0 8px;padding:0;border:none}
+.rzmc::-webkit-scrollbar{display:none}
+.rzsec{display:flex;flex-direction:column;gap:20px}
+.rzsl{font-family:var(--f);font-weight:400;font-size:9px;line-height:1;letter-spacing:.22em;color:var(--ink);text-transform:uppercase;cursor:pointer;user-select:none;display:inline-block}
+.rzsr{width:100%;height:1px;background:rgba(0,0,0,.10);flex-shrink:0}
+.rzrt{font-family:var(--fs);font-weight:var(--fw-display);font-size:21px;line-height:1.26;letter-spacing:-.01em;color:var(--ink);cursor:pointer;user-select:none;display:inline-block}
+.rzmr{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.rzol{width:13px;height:13px;object-fit:contain;border-radius:3px;flex-shrink:0}
+.rzon{flex:1;font-family:var(--f);font-size:9.5px;line-height:1;letter-spacing:.04em;text-transform:uppercase;color:rgba(0,0,0,.50)}
+.rzod{font-family:var(--f);font-size:9.5px;line-height:1;letter-spacing:.04em;text-transform:uppercase;white-space:nowrap;color:rgba(0,0,0,.35)}
+.rzjobs{display:flex;flex-direction:column;gap:32px}.rzjob{display:flex;flex-direction:column;gap:10px}
+.rzbul{padding-left:14px;display:flex;flex-direction:column;gap:8px;margin-top:2px}
+.rzbul li{font-family:var(--f);font-size:10px;line-height:2.0;text-transform:uppercase;color:rgba(0,0,0,.72)}
+.rzedu{display:flex;flex-direction:column;gap:10px}
+.rztools{display:flex;flex-wrap:wrap;gap:7px}
+.rztc{display:flex;align-items:center;gap:8px;padding:5px 12px 5px 6px;border:.5px solid rgba(0,0,0,.09);transition:border-color .16s,background .16s;cursor:default}
+.rztc:hover{border-color:rgba(0,0,0,.26);background:rgba(0,0,0,.02)}
+.rzti{width:15px;height:15px;object-fit:contain;flex-shrink:0}
+.rztc span{font-family:var(--f);font-size:8.5px;line-height:1;letter-spacing:.04em;text-transform:uppercase;color:rgba(0,0,0,.72);white-space:nowrap}
+
+@media(max-width:1024px){.rzsb{width:300px;min-width:300px;padding-left:36px}.rzcv{gap:40px}}
+@media(max-width:800px){.rzsb{width:240px;min-width:240px;padding-left:28px}.rznm{font-size:36px}}
+/* Between cards stack and resume (stack above #rz z-index:3) */
+#resume-label.resume-label{position:relative;z-index:5;padding:clamp(20px,4vh,36px) 8vw;background:var(--light);border-top:1px solid rgba(0,0,0,.08)}
+
+#page-footer.page-footer{position:relative;z-index:5;padding:clamp(36px,6vh,56px) 8vw clamp(48px,8vh,80px);background:var(--light);display:flex;justify-content:center;align-items:center;min-height:72px}
+.resume-download{font-family:var(--f);font-weight:600;font-size:clamp(11px,1.35vw,14px);letter-spacing:.18em;text-transform:uppercase;color:var(--ink);border:1px solid rgba(0,0,0,.35);padding:16px 32px;display:inline-block;background:rgba(0,0,0,.04);transition:border-color .2s ease,background .2s ease,box-shadow .2s ease;box-shadow:0 1px 0 rgba(0,0,0,.06)}
+.resume-download:hover{border-color:rgba(0,0,0,.55);background:rgba(0,0,0,.07);box-shadow:0 2px 8px rgba(0,0,0,.08)}
+
+@media(max-width:640px){
+  #hs{padding:56px 20px 44px}
+  .rzcv{flex-direction:column;min-height:auto;padding:40px 24px 60px;gap:32px;max-width:100%}
+  .rzsb{width:100%;min-width:unset;height:auto;overflow:visible;padding:0;position:relative}
+  .rzmc{height:auto;overflow:visible;padding:0 0 60px}
+  .rznm{font-size:32px}
+  #rz{overflow:auto}.rzp{overflow:auto}
+  .crd-title{font-size:clamp(17px,5.5vw,28px);line-height:1.1;letter-spacing:-.025em;margin-bottom:clamp(10px,1.8vh,16px)}
+}
+

@@ -1,0 +1,187 @@
+/* Works canvas — separated hero fly above canvas */
+#hero-image-transition {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  padding: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+#hero-image-transition * {
+  pointer-events: auto;
+}
+
+#wcScrollDriver {
+  position: relative;
+  min-height: calc(600vh + 520vh);
+  margin-top: 0;
+}
+
+#wcStickyFrame {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+#wcStickyFrame #cards-wrap {
+  position: absolute;
+  inset: 0;
+  height: 100% !important;
+  z-index: 12;
+  pointer-events: none;
+}
+
+#wcStickyFrame #cards-stage {
+  position: absolute !important;
+  inset: 0 !important;
+  height: 100% !important;
+}
+
+#wcStickyFrame #cards-stage.cards-interactive {
+  pointer-events: auto;
+}
+
+#worksCanvas {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  box-sizing: border-box;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+#worksCanvas.is-pannable {
+  pointer-events: auto;
+}
+
+#worksCanvas.is-interactive::after {
+  content: 'Drag to explore · Scroll or tap continue';
+  position: absolute;
+  left: 50%;
+  bottom: 28px;
+  transform: translateX(-50%);
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: rgba(8, 8, 10, 0.56);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 16;
+}
+
+#worksMotionLayer {
+  position: absolute;
+  inset: clamp(16px, 3vw, 50px);
+  border-radius: 16px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.03), transparent 55%),
+    rgba(8, 8, 8, 0.96);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 40px 120px rgba(0, 0, 0, 0.45);
+  will-change: transform, opacity;
+  z-index: 1;
+}
+
+#bentoPanRoot {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 5;
+  pointer-events: auto;
+  opacity: 0;
+  will-change: opacity;
+}
+
+#worksContinue {
+  position: absolute;
+  left: 50%;
+  bottom: 24px;
+  transform: translateX(-50%);
+  z-index: 15;
+  padding: 12px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(14, 14, 18, 0.7);
+  color: rgba(255, 255, 255, 0.84);
+  font: inherit;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.22s ease, border-color 0.22s ease, background 0.22s ease;
+}
+
+#worksCanvas.is-interactive #worksContinue {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#worksContinue:hover {
+  border-color: rgba(255, 255, 255, 0.32);
+  background: rgba(18, 18, 22, 0.85);
+}
+
+#worksHeroFly {
+  --hero-ratio: 1;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: min(55vw, calc((100vh - 120px) * var(--hero-ratio)));
+  max-width: 55vw;
+  aspect-ratio: var(--hero-ratio);
+  z-index: 20;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.55);
+  will-change: transform, opacity;
+  pointer-events: none;
+  transform-origin: center center;
+}
+
+#worksHeroFly img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+#worksHeroFly.is-hidden {
+  opacity: 0 !important;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+@media (max-width: 767px) {
+  #worksMotionLayer {
+    inset: 12px;
+    border-radius: 14px;
+  }
+
+  #worksHeroFly {
+    width: min(90vw, calc((100vh - 72px) * var(--hero-ratio)));
+    max-width: 90vw;
+  }
+
+  #worksContinue {
+    bottom: 18px;
+    padding: 10px 12px;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+  }
+
+  #worksCanvas.is-interactive::after {
+    bottom: 64px;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+  }
+}

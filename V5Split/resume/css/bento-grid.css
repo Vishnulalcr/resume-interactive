@@ -1,0 +1,80 @@
+/* Bento grid — large field, hero reserved at center column */
+#bentoGrid {
+  --col: 272px;
+  --gap: 14px;
+  --row-unit: 8px;
+  display: grid;
+  grid-template-columns: repeat(8, var(--col));
+  grid-auto-rows: var(--row-unit);
+  grid-auto-flow: dense;
+  gap: var(--gap);
+  padding: 64px;
+  width: max-content;
+  height: max-content;
+  min-width: calc(8 * var(--col) + 7 * var(--gap) + 128px);
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform-origin: center center;
+  will-change: transform;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.bento-cell {
+  border-radius: 12px;
+  overflow: hidden;
+  background: #0c0c0c;
+  cursor: pointer;
+  touch-action: manipulation;
+  position: relative;
+  will-change: transform, opacity, filter;
+  transition: filter 0.22s ease, box-shadow 0.22s ease;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+
+.bento-cell:hover {
+  filter: brightness(1.08);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.16);
+}
+
+.bento-cell:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.85);
+  outline-offset: 2px;
+}
+
+.bento-cell img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  pointer-events: none;
+}
+
+.bento-hero {
+  grid-column-start: 4;
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.18);
+  opacity: 0;
+}
+
+.bento-wide,
+.bento-tall,
+.bento-square,
+.bento-panorama {
+  opacity: 1;
+}
+
+@media (max-width: 767px) {
+  #bentoGrid {
+    --col: 124px;
+    --gap: 10px;
+    padding: 36px;
+    grid-template-columns: repeat(6, var(--col));
+    min-width: calc(6 * var(--col) + 5 * var(--gap) + 72px);
+  }
+
+  .bento-hero {
+    grid-column-start: 2;
+  }
+}

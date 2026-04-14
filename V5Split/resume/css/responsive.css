@@ -1,0 +1,77 @@
+/* ════════════════════════════════════════════════════════════════
+   MOBILE RESPONSIVE — < 768px (iPhone, Small Android)
+   ════════════════════════════════════════════════════════════════ */
+@media(max-width:768px){
+  /* Let the hero sphere paint past the viewport edge; global overflow-x:hidden clips it otherwise */
+  html,body{overflow-x:visible}
+  /* HERO SECTION — avoid clipping scaled sphere (overflow + layout containment) */
+  #hero{overflow:visible;contain:none}
+  #hs{padding:40px 20px 32px;font-size:0;overflow:visible;contain:none}
+  #sphere-visual{overflow:visible;contain:none}
+  #hero-statement{max-width:100%;padding:0 16px}
+  #hero-statement .hero-svg-wrap{width:clamp(280px,85vw,400px)}
+
+  /* STATS SECTION */
+  #stats{padding:16px 12px;margin-top:-60px}
+  .stats-inner{padding:clamp(14px,2.5vh,20px) clamp(10px,2vw,16px);gap:10px;border-radius:10px}
+  .stat-num{font-size:clamp(20px,5vw,28px)}
+  .stat-label{font-size:7px;letter-spacing:.12em}
+
+  /* BIO SECTION */
+  #text-block{font-size:clamp(14px,3.5vw,18px);line-height:1.5;max-width:90vw}
+  #stage{width:100%;padding:0 16px;box-sizing:border-box}
+
+  /* CARDS SECTION — hierarchy: index < title < body; tools as footer row */
+  .crd-num{font-size:clamp(9px,2vw,11px);margin-bottom:clamp(8px,1.2vh,12px)}
+  .crd-title{font-size:clamp(18px,5vw,30px);line-height:1.08;margin-bottom:clamp(12px,2vh,18px);letter-spacing:-.025em}
+  .crd-body{font-size:clamp(12px,3.2vw,15px);line-height:1.6;margin-bottom:clamp(10px,1.5vh,14px);max-width:100%;width:100%}
+  .crd-tools{font-size:clamp(8px,2vw,10px);letter-spacing:.18em;padding-top:clamp(10px,1.4vh,14px)}
+
+  /* CORNER LABELS - Larger, higher contrast on mobile */
+  .cor{font-size:9.5px;letter-spacing:.12em;opacity:1;pointer-events:auto;color:rgba(255,255,255,.80);text-shadow:0 1px 12px rgba(0,0,0,.8),0 0 4px rgba(0,0,0,.5)}
+  .c-tl{top:12px;left:14px;text-align:left}
+  .c-tr{top:12px;right:14px;text-align:right;pointer-events:auto}
+  .c-bl{bottom:14px;left:14px;text-align:left;pointer-events:auto}
+  .c-br{bottom:14px;right:14px;text-align:right}
+
+  /* SIDE LABELS - Bigger, readable on mobile */
+  .side-label{width:32px;font-size:9px;letter-spacing:.12em;color:rgba(255,255,255,.80);text-shadow:0 1px 12px rgba(0,0,0,.8),0 0 4px rgba(0,0,0,.5)}
+
+  /* RESUME SECTION - HIDE SIDEBAR */
+  .rzcv{flex-direction:column;gap:24px;min-height:auto;padding:20px 16px 40px}
+  .rzsb{width:100%;padding:0;height:auto;overflow:visible}
+  .rzmc{height:auto;overflow:visible;padding:0 0 40px}
+  .rznm{font-size:28px}
+}
+
+/* ════════════════════════════════════════════════════════════════
+   TABLET RESPONSIVE — 768px to 1024px (iPad)
+   ════════════════════════════════════════════════════════════════ */
+@media(min-width:769px) and (max-width:1024px){
+  /* HERO SECTION */
+  #hs{padding:50px 32px 40px}
+  #sphere-visual{transform:scale(0.75)}
+  #hero-statement .hero-svg-wrap{width:clamp(380px,88vw,800px)}
+
+  /* STATS SECTION */
+  #stats{padding:28px 24px;margin-top:-90px}
+  .stats-inner{padding:clamp(20px,3.5vh,32px) clamp(16px,2.5vw,28px);gap:20px}
+  .stat-num{font-size:clamp(24px,4.5vw,36px)}
+
+  /* BIO SECTION */
+  #text-block{font-size:clamp(16px,3vw,20px);max-width:85vw}
+
+  /* CARDS SECTION */
+  .crd-num{font-size:clamp(9px,1.6vw,11px);margin-bottom:clamp(8px,1vh,12px)}
+  .crd-title{font-size:clamp(20px,3.8vw,40px);line-height:1.08;margin-bottom:clamp(14px,2vh,22px)}
+  .crd-body{font-size:clamp(12px,1.8vw,14px);line-height:1.6;margin-bottom:clamp(12px,1.5vh,16px)}
+  .crd-tools{font-size:clamp(8px,1.3vw,10px);padding-top:clamp(10px,1.3vh,16px)}
+
+  /* CORNER LABELS - Tablet */
+  .cor{font-size:9px;color:rgba(255,255,255,.55)}
+  .c-tl,.c-tr,.c-bl,.c-br{opacity:1}
+
+  /* SIDE LABELS - Tablet */
+  .side-label{width:36px;font-size:8px;letter-spacing:.14em}
+}
+

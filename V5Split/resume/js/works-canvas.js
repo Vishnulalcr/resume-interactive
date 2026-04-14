@@ -1,0 +1,1 @@
+/* Works canvas kept disabled in current stable baseline. */
